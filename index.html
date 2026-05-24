@@ -1,3 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Body Language Master Quiz</title>
+
+<style>
+
+body{
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right,#e0f2fe,#f8fafc);
+    margin:0;
+    padding:20px;
+    color:#1e293b;
+}
+
+.container{
+    max-width:1000px;
+    margin:auto;
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.15);
+}
+
+h1{
+    text-align:center;
+    color:#2563eb;
+}
+
+.subtitle{
+    text-align:center;
+    margin-bottom:30px;
+    font-size:18px;
+}
+
+.question{
+    background:#f8fafc;
+    padding:20px;
+    margin-bottom:20px;
+    border-radius:15px;
+}
+
+.question p{
+    font-weight:bold;
+}
+
+label{
+    display:block;
+    margin:8px 0;
+    cursor:pointer;
+}
+
+button{
+    display:block;
+    margin:40px auto;
+    padding:15px 35px;
+    font-size:18px;
+    border:none;
+    border-radius:10px;
+    background:#2563eb;
+    color:white;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#1d4ed8;
+}
+
+#result{
+    text-align:center;
+    font-size:28px;
+    font-weight:bold;
+    margin-top:30px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Body Language Master Quiz</h1>
+<p class="subtitle">50 Questions | Chapters 10–16</p>
+
+<form id="quizForm"></form>
+
+<button onclick="gradeQuiz()">Submit Quiz</button>
+
+<div id="result"></div>
+
+</div>
+
 <script>
 
 const questions = [
@@ -135,7 +231,7 @@ a:"Discomfort or dishonesty"
 },
 
 {
-q:"23. A firm handshake often shows:",
+q:"23. What does a firm handshake often show?",
 o:["Weakness","Confidence","Fear","Sadness"],
 a:"Confidence"
 },
@@ -304,26 +400,26 @@ a:"Using gesture clusters and context"
 
 ];
 
-const quizForm = document.getElementById("quizForm");
+const form = document.getElementById("quizForm");
 
 questions.forEach((item,index)=>{
 
-    const questionDiv = document.createElement("div");
+    const div = document.createElement("div");
+    div.classList.add("question");
 
-    questionDiv.classList.add("question");
+    let html = `<p>${item.q}</p>`;
 
-    questionDiv.innerHTML = `
-        <p>${item.q}</p>
+    item.o.forEach(option=>{
+        html += `
+        <label>
+        <input type="radio" name="q${index}" value="${option}">
+        ${option}
+        </label>
+        `;
+    });
 
-        ${item.o.map(option => `
-            <label>
-                <input type="radio" name="q${index}" value="${option}">
-                ${option}
-            </label>
-        `).join("")}
-    `;
-
-    quizForm.appendChild(questionDiv);
+    div.innerHTML = html;
+    form.appendChild(div);
 
 });
 
@@ -341,18 +437,19 @@ function gradeQuiz(){
 
     });
 
-    const percentage = Math.round((score / questions.length) * 100);
+    let percentage = ((score/questions.length)*100).toFixed(0);
 
-    document.getElementById("result").innerHTML = `
-        <h2>You scored ${score}/50</h2>
-        <h1>${percentage}%</h1>
-    `;
+    document.getElementById("result").innerHTML =
+    `You scored ${score}/50<br>Final Grade: ${percentage}%`;
 
     window.scrollTo({
         top: document.body.scrollHeight,
-        behavior: "smooth"
+        behavior:'smooth'
     });
 
 }
 
 </script>
+
+</body>
+</html>
