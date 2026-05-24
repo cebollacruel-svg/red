@@ -79,7 +79,7 @@ a:"Nervousness or uncertainty"
 },
 
 {
-q:"13. A palm-down gesture communicates?",
+q:"13. A palm-down gesture communicates:",
 o:["Submission","Authority","Fear","Excitement"],
 a:"Authority"
 },
@@ -343,7 +343,7 @@ function gradeQuiz(): void {
     questions.forEach((item: Question, index: number) => {
 
         const selected = document.querySelector(
-            \`input[name="q\${index}"]:checked\`
+            `input[name="q${index}"]:checked`
         ) as HTMLInputElement | null;
 
         if(selected && selected.value === item.a){
@@ -360,5 +360,10 @@ function gradeQuiz(): void {
         <h2>You scored ${score}/50</h2>
         <h1>${percentage}%</h1>
     `;
+
+    window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: "smooth"
+    });
 
 }
